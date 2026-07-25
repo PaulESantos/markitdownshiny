@@ -4,7 +4,7 @@ Version: 0.0.1
 Authors@R: 
     person(given = "Paul E.",
            family = "Santos Andrade",
-           role = c("aut", "cre", "cph"),
+           role = c("aut", "cre"),
            email = "paulefrens@gmail.com",
            comment = c(ORCID = "0000-0002-6635-0375"))
 Description: Provides an interactive 'Shiny' application and 'R' functions for

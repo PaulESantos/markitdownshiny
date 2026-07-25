@@ -14,8 +14,7 @@ The result from \code{\link[shiny:runApp]{shiny::runApp()}}.
 }
 \description{
 Starts the bundled Shiny application for uploading documents, converting
-them to Markdown, previewing the result, and downloading the \code{.md}
-output.
+them to Markdown, previewing the result, and downloading the \code{.md} output.
 }
 \examples{
 \dontrun{
