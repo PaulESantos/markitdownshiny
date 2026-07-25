@@ -1,0 +1,33 @@
+Package: markitdownshiny
+Title: 'Shiny' Interface to Microsoft 'MarkItDown'
+Version: 0.0.1
+Authors@R: 
+    person(given = "Paul E.",
+           family = "Santos Andrade",
+           role = c("aut", "cre", "cph"),
+           email = "paulefrens@gmail.com",
+           comment = c(ORCID = "0000-0002-6635-0375"))
+Description: Provides an interactive 'Shiny' application and 'R' functions for
+    converting documents to Markdown format using Microsoft's Python 'markitdown'
+    library. Supports converting Portable Document Format (PDF), Microsoft Word,
+    PowerPoint, Excel, Comma-Separated Values (CSV), HyperText Markup Language
+    (HTML), and images into clean Markdown text. Includes functions to launch
+    the bundled 'Shiny' web application or execute document conversions
+    programmatically.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Depends:
+    R (>= 4.1)
+Imports:
+    bslib,
+    htmltools,
+    markdown,
+    reticulate,
+    shiny
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+SystemRequirements: Python (>= 3.10) and the Python package markitdown,
+    installed for example with pip install 'markitdown[all]'.
+Config/roxygen2/version: 8.0.0

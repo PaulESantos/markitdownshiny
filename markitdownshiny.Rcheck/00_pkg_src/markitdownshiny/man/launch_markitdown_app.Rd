@@ -1,0 +1,17 @@
+\name{launch_markitdown_app}
+\alias{launch_markitdown_app}
+\title{Launch the MarkItDown Shiny app}
+\usage{
+launch_markitdown_app(...)
+}
+\arguments{
+\item{...}{Arguments passed to \code{\link[shiny:runApp]{shiny::runApp()}}.}
+}
+\value{
+The result from \code{\link[shiny:runApp]{shiny::runApp()}}.
+}
+\description{
+Starts the bundled Shiny application for uploading documents, converting
+them to Markdown, previewing the result, and downloading the \code{.md}
+output.
+}
