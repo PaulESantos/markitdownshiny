@@ -31,3 +31,5 @@ Config/testthat/edition: 3
 SystemRequirements: Python (>= 3.10) and the Python package markitdown,
     installed for example with pip install 'markitdown[all]'.
 Config/roxygen2/version: 8.0.0
+URL: https://github.com/PaulESantos/markitdownshiny
+BugReports: https://github.com/PaulESantos/markitdownshiny/issues
