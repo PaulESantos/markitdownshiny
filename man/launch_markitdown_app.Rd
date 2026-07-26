@@ -4,9 +4,12 @@
 \alias{launch_markitdown_app}
 \title{Launch the MarkItDown Shiny app}
 \usage{
-launch_markitdown_app(...)
+launch_markitdown_app(max_file_size_mb = 50, ...)
 }
 \arguments{
+\item{max_file_size_mb}{Maximum allowed upload file size in megabytes (MB).
+Defaults to \code{50} MB.}
+
 \item{...}{Arguments passed to \code{\link[shiny:runApp]{shiny::runApp()}}.}
 }
 \value{
@@ -14,12 +17,16 @@ The result from \code{\link[shiny:runApp]{shiny::runApp()}}.
 }
 \description{
 Starts the bundled Shiny application for uploading documents, converting
-them to Markdown, previewing the result, and downloading the \code{.md} output.
+them to Markdown, and downloading the \code{.md} output.
 }
 \examples{
 \dontrun{
 if (interactive()) {
+  # Launch with default 50 MB limit
   launch_markitdown_app()
+
+  # Launch with custom 100 MB upload limit
+  launch_markitdown_app(max_file_size_mb = 100)
 }
 }
 }

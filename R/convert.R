@@ -86,9 +86,12 @@ convert_with_cli <- function(path) {
 
   output <- tempfile(fileext = ".md")
   err <- tempfile(fileext = ".log")
+  norm_path <- normalizePath(path, winslash = "/", mustWork = TRUE)
+  norm_output <- normalizePath(output, winslash = "/", mustWork = FALSE)
+
   status <- system2(
     cli_path,
-    args = c(normalizePath(path, winslash = "/", mustWork = TRUE), "-o", output),
+    args = c(shQuote(norm_path), "-o", shQuote(norm_output)),
     stdout = TRUE,
     stderr = err
   )

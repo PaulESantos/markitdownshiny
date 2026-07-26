@@ -7,42 +7,41 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-**`markitdownshiny`** es un paquete de R que proporciona una interfaz interactiva de **Shiny** y funciones programáticas para convertir archivos y documentos a formato **Markdown**, integrando la librería de Python [Microsoft MarkItDown](https://github.com/microsoft/markitdown) mediante `reticulate`.
+**`markitdownshiny`** es un paquete de R que proporciona una aplicación interactiva en **Shiny** y funciones utilitarias programáticas para convertir archivos y documentos a formato **Markdown**, integrando la librería de Python [Microsoft MarkItDown](https://github.com/microsoft/markitdown) mediante `reticulate`.
 
 ## 🚀 Características principales
 
-- **Interfaz Shiny Moderna:** Carga de documentos, vista previa de código Markdown plano y renderizado HTML interactivo utilizando estilos de `bslib` (Bootstrap 5).
-- **Conversión Programática:** Función `convert_to_markdown()` para integrar la conversión directa en scripts de R y pipelines de procesamiento.
-- **Soporte Multiformato Extenso:** Conversión de archivos PDF, Word (`.docx`), PowerPoint (`.pptx`), Excel (`.xlsx`, `.csv`), HTML, JSON, XML, ZIP, EPUB, imágenes (con metadatos/OCR), audio (transcripción) y más.
-- **Integración Flexible con Python:** Permite conectar directamente mediante la API de Python a través de `reticulate` o usar el ejecutable CLI (`markitdown`).
-- **Exportación:** Descarga inmediata del resultado en formato `.md`.
+- **Interfaz Shiny Moderna:** Carga intuitiva de documentos, visor de código Markdown a pantalla completa y botón de parada limpia de la aplicación (`Detener Aplicación`).
+- **Límite de Subida Configurable:** Límite por defecto de **50 MB** en ejecuciones locales, ajustable de forma sencilla con el parámetro `max_file_size_mb`.
+- **Doble Motor de Conversión:** Integración directa por API de Python mediante `reticulate` y soporte para el ejecutable de línea de comandos CLI (`markitdown`), con respaldo automático (*fallback*).
+- **Procesamiento de Rutas Seguro:** Sanitización automática de nombres de archivo para gestionar rutas con espacios o caracteres especiales en Windows, macOS y Linux.
+- **Soporte Multiformato Extenso:** Conversión de documentos PDF, Word (`.docx`), PowerPoint (`.pptx`), Excel (`.xlsx`, `.csv`), HTML, JSON, XML, ZIP, EPUB, imágenes (OCR/metadatos) y audio (transcripción).
+- **Exportación Directa:** Descarga inmediata del resultado en archivos `.md`.
 
 ## 📦 Instalación
 
 ### 1. Requisitos de R
 
-Puedes instalar la versión de desarrollo o instalar las dependencias necesarias ejecutando en R:
+Puedes instalar la versión publicada en CRAN (cuando esté disponible) o instalar la versión de desarrollo en R:
 
 ```r
-# Instalar dependencias de R
-install.packages(c("shiny", "bslib", "reticulate", "markdown", "htmltools"))
+# Instalar la versión oficial desde CRAN (cuando esté disponible):
+install.packages("markitdownshiny")
 
-# Instalar la versión publicada en CRAN (cuando esté disponible):
-# install.packages("markitdownshiny")
-
-# O instalar la versión de desarrollo desde GitHub:
-# devtools::install_github("paulefrens/markitdownshiny")
+# O instalar dependencias y versión de desarrollo desde GitHub:
+# install.packages(c("shiny", "bslib", "reticulate", "markdown", "htmltools"))
+# pak::pak("PaulESantos/markitdownshiny")
 ```
 
 ### 2. Requisitos de Python
 
-`markitdownshiny` requiere **Python 3.10 o superior** y la librería `markitdown`. Instálala en tu entorno ejecutable de Python con:
+`markitdownshiny` requiere **Python 3.10 o superior** y el paquete `markitdown`. Instálalo en tu entorno ejecutable de Python con:
 
 ```bash
 python -m pip install "markitdown[all]"
 ```
 
-Si utilizas un entorno específico de Python (Conda, venv, pyenv), puedes configurarlo en R antes de usar la librería:
+Si utilizas un entorno específico de Python (Conda, venv, pyenv), puedes configurarlo en R antes de invocar el paquete:
 
 ```r
 library(reticulate)
@@ -53,16 +52,19 @@ use_python("/ruta/a/tu/python", required = TRUE)
 
 ### 1. Iniciar la Aplicación Shiny
 
-Para lanzar la interfaz gráfica interactiva:
+Para lanzar la interfaz gráfica interactiva con el límite por defecto de 50 MB:
 
 ```r
 library(markitdownshiny)
 
-# Iniciar la aplicación Shiny
+# Lanzar la aplicación Shiny (límite predeterminado de 50 MB)
 launch_markitdown_app()
+
+# O especificar un límite de subida personalizado en Megabytes (ej. 100 MB):
+launch_markitdown_app(max_file_size_mb = 100)
 ```
 
-Durante la etapa de desarrollo:
+Durante la etapa de desarrollo local del paquete:
 
 ```r
 devtools::load_all()
@@ -71,12 +73,12 @@ launch_markitdown_app()
 
 ### 2. Conversión Programática en R
 
-Puedes realizar conversiones de archivos directamente desde código R sin abrir la interfaz Shiny:
+Puedes realizar conversiones de documentos directamente desde scripts de R sin abrir la interfaz gráfica:
 
 ```r
 library(markitdownshiny)
 
-# Convertir un documento Word o PDF a Markdown
+# Convertir un archivo Word o PDF a texto Markdown
 md_text <- convert_to_markdown("documento.docx")
 
 # Imprimir el resultado en consola
@@ -86,7 +88,7 @@ cat(md_text)
 writeLines(md_text, "resultado.md")
 ```
 
-Si deseas forzar el uso de la herramienta CLI de `markitdown`:
+Si deseas forzar el uso del ejecutable de consola CLI de `markitdown`:
 
 ```r
 md_text <- convert_to_markdown("reporte.pdf", use_cli = TRUE)
@@ -104,8 +106,8 @@ md_text <- convert_to_markdown("reporte.pdf", use_cli = TRUE)
 
 ## 🏗️ Arquitectura y Seguridad
 
-- **Procesamiento Local:** La conversión se ejecuta de forma local dentro del proceso de R / Python. Los archivos cargados se almacenan temporalmente en `tempdir()` y se eliminan al finalizar la sesión.
-- **Seguridad en Servidores:** Si planeas desplegar la aplicación Shiny en un servidor (ej. Shiny Server o Posit Connect), ajusta los límites de tamaño máximo de subida (`options(shiny.maxRequestSize = ...)`).
+- **Procesamiento Local:** La conversión se ejecuta localmente dentro de tu entorno de R / Python. Los archivos subidos se copian de forma temporal a `tempdir()` con nombres sanitizados y se eliminan al cerrar la sesión.
+- **Controles en Servidores:** Para despliegues en servidores públicos (ej. Shiny Server o Posit Connect), el parámetro `max_file_size_mb` permite ajustar el límite de subida para prevenir saturación de recursos.
 
 ## 👤 Autoría y Licencia
 
