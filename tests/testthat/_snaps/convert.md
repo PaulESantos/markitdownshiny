@@ -21,3 +21,4 @@
     Condition
       Error:
       ! `path` debe apuntar a un archivo, no a un directorio.
+

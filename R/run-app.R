@@ -27,14 +27,21 @@ launch_markitdown_app <- function(max_file_size_mb = 50, ...) {
   app_dir <- system.file("shiny", package = "markitdownshiny")
 
   if (!nzchar(app_dir) || !file.exists(file.path(app_dir, "app.R"))) {
-    local_app <- normalizePath(file.path(getwd(), "inst", "shiny"), winslash = "/", mustWork = FALSE)
+    local_app <- normalizePath(
+      file.path(getwd(), "inst", "shiny"),
+      winslash = "/",
+      mustWork = FALSE
+    )
     if (file.exists(file.path(local_app, "app.R"))) {
       app_dir <- local_app
     }
   }
 
   if (!nzchar(app_dir) || !file.exists(file.path(app_dir, "app.R"))) {
-    stop("No se encontro la app Shiny instalada ni en la ruta local del paquete.", call. = FALSE)
+    stop(
+      "No se encontro la app Shiny instalada ni en la ruta local del paquete.",
+      call. = FALSE
+    )
   }
 
   shiny::runApp(app_dir, ...)

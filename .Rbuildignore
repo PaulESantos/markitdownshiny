@@ -5,3 +5,4 @@
 ^.*\.Rproj$
 ^\.agents$
 ^cran-comments\.md$
+^skills$

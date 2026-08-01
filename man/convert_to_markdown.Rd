@@ -4,7 +4,12 @@
 \alias{convert_to_markdown}
 \title{Convert a document to Markdown}
 \usage{
-convert_to_markdown(path, use_cli = FALSE, python = NULL)
+convert_to_markdown(
+  path,
+  use_cli = FALSE,
+  python = NULL,
+  output = c("text", "result")
+)
 }
 \arguments{
 \item{path}{Path to the source document.}
@@ -13,9 +18,13 @@ convert_to_markdown(path, use_cli = FALSE, python = NULL)
 of the Python API.}
 
 \item{python}{Optional path to a Python executable to use with \code{reticulate}.}
+
+\item{output}{Output format. Use \code{"text"} to return only Markdown, or
+\code{"result"} to return a structured result with available metadata.}
 }
 \value{
-A character scalar containing Markdown.
+A character scalar containing Markdown when \code{output = "text"}, or
+a \code{markitdownshiny_result} object when \code{output = "result"}.
 }
 \description{
 Converts a local document to Markdown by delegating to Microsoft's Python
